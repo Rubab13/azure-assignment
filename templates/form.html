@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Bank Marketing Prediction</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f4f6f8;
+    }
+
+    .form-container {
+      max-width: 960px;
+      margin: 50px auto;
+      background-color: #fff;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: #555;
+      cursor: help;
+    }
+
+    .btn-primary {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container form-container">
+    <h2>Enter Client Information</h2>
+    <form action="/predict" method="post">
+      <div class="row g-3">
+        <!-- Repeat this structure for each field -->
+        <div class="col-md-4">
+          <label for="age" class="form-label" data-bs-toggle="tooltip" title="Age">Age</label>
+          <input type="number" class="form-control" id="age" name="age" required>
+        </div>
+        <!-- <div class="col-md-4">
+                    <label for="job" class="form-label" data-bs-toggle="tooltip" title="Type of job">Job</label>
+                    <input type="text" class="form-control" id="job" name="job" required>
+                </div> -->
+        <div class="col-md-4">
+          <label for="job" class="form-label" data-bs-toggle="tooltip" title="Select the client's job type">Job</label>
+          <select class="form-select" id="job" name="job" required>
+            <option value="" disabled selected>Select job</option>
+            <option value="admin.">Admin</option>
+            <option value="blue-collar">Blue Collar</option>
+            <option value="entrepreneur">Entrepreneur</option>
+            <option value="housemaid">Housemaid</option>
+            <option value="management">Management</option>
+            <option value="retired">Retired</option>
+            <option value="self-employed">Self-Employed</option>
+            <option value="services">Services</option>
+            <option value="student">Student</option>
+            <option value="technician">Technician</option>
+            <option value="unemployed">Unemployed</option>
+            <option value="unknown">Unknown</option>
+          </select>
+        </div>
+
+        <!-- <div class="col-md-4">
+          <label for="marital" class="form-label" data-bs-toggle="tooltip" title="Marital">Marital</label>
+          <input type="text" class="form-control" id="marital" name="marital" required>
+        </div> -->
+        <div class="col-md-4">
+          <label for="marital" class="form-label" data-bs-toggle="tooltip"
+            title="Select client's marital status">Marital</label>
+          <select class="form-select" id="marital" name="marital" required>
+            <option value="" disabled selected>Select marital status</option>
+            <option value="single">Single</option>
+            <option value="married">Married</option>
+            <option value="divorced">Divorced</option>
+            <option value="unknown">Unknown</option>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label for="education" class="form-label" data-bs-toggle="tooltip"
+            title="Select the highest level of education completed">Education</label>
+          <select class="form-select" id="education" name="education" required>
+            <option value="" disabled selected>Select education level</option>
+            <option value="primary">Primary</option>
+            <option value="secondary">Secondary</option>
+            <option value="tertiary">Tertiary</option>
+            <option value="unknown">Unknown</option>
+          </select>
+        </div>
+
+        <!-- <div class="col-md-4">
+          <label for="education" class="form-label" data-bs-toggle="tooltip"
+            title="Select the client's education level">Education</label>
+          <select class="form-select" id="education" name="education" required>
+            <option value="" disabled selected>Select education level</option>
+            <option value="basic.4y">Basic 4 years</option>
+            <option value="basic.6y">Basic 6 years</option>
+            <option value="basic.9y">Basic 9 years</option>
+            <option value="high.school">High School</option>
+            <option value="illiterate">Illiterate</option>
+            <option value="professional.course">Professional Course</option>
+            <option value="university.degree">University Degree</option>
+            <option value="unknown">Unknown</option>
+          </select>
+        </div> -->
+
+        <div class="col-md-4">
+          <label for="default" class="form-label" data-bs-toggle="tooltip"
+            title="Does the client have credit in default?">Default</label>
+          <select class="form-select" id="default" name="default" required>
+            <option value="" disabled selected>Select option</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label for="balance" class="form-label" data-bs-toggle="tooltip" title="Balance">Balance</label>
+          <input type="number" step="any" class="form-control" id="balance" name="balance" required>
+        </div>
+
+        <div class="col-md-4">
+          <label for="housing" class="form-label" data-bs-toggle="tooltip"
+            title="Does the client have a housing loan?">Housing</label>
+          <select class="form-select" id="housing" name="housing" required>
+            <option value="" disabled selected>Select option</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label for="loan" class="form-label" data-bs-toggle="tooltip"
+            title="Does the client have a personal loan?">Loan</label>
+          <select class="form-select" id="loan" name="loan" required>
+            <option value="" disabled selected>Select option</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label for="contact" class="form-label" data-bs-toggle="tooltip"
+            title="Type of communication used to contact the client">Contact</label>
+          <select class="form-select" id="contact" name="contact" required>
+            <option value="" disabled selected>Select contact type</option>
+            <option value="cellular">Cellular</option>
+            <option value="telephone">Telephone</option>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label for="day" class="form-label" data-bs-toggle="tooltip" title="Day of the month (1-31)">Day</label>
+          <select class="form-select" id="day" name="day" required>
+            <option value="" disabled selected>Select day</option>
+            <!-- Options 1 to 31 -->
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+            <option value="31">31</option>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label for="month" class="form-label" data-bs-toggle="tooltip" title="Month of the year">Month</label>
+          <select class="form-select" id="month" name="month" required>
+            <option value="" disabled selected>Select month</option>
+            <option value="jan">January</option>
+            <option value="feb">February</option>
+            <option value="mar">March</option>
+            <option value="apr">April</option>
+            <option value="may">May</option>
+            <option value="jun">June</option>
+            <option value="jul">July</option>
+            <option value="aug">August</option>
+            <option value="sep">September</option>
+            <option value="oct">October</option>
+            <option value="nov">November</option>
+            <option value="dec">December</option>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label for="campaign" class="form-label" data-bs-toggle="tooltip"
+            title="Number of contacts performed during this campaign and for this client">Campaign</label>
+          <input type="number" class="form-control" id="campaign" name="campaign" required>
+        </div>
+
+        <div class="col-md-4">
+          <label for="pdays" class="form-label" data-bs-toggle="tooltip"
+            title="Number of days that passed by after the client was last contacted from a previous campaign (numeric; -1 means client was not previously contacted)">Pdays</label>
+          <input type="number" class="form-control" id="pdays" name="pdays" required>
+        </div>
+        <div class="col-md-4">
+          <label for="previous" class="form-label" data-bs-toggle="tooltip"
+            title="number of contacts performed before this campaign and for this client	">Previous</label>
+          <input type="number" class="form-control" id="previous" name="previous" required>
+        </div>
+
+        <div class="col-md-4">
+          <label for="poutcome" class="form-label" data-bs-toggle="tooltip"
+            title="Outcome of the previous marketing campaign">Poutcome</label>
+          <select class="form-select" id="poutcome" name="poutcome" required>
+            <option value="" disabled selected>Select outcome</option>
+            <option value="failure">Failure</option>
+            <option value="unknown">Unknown</option>
+            <option value="success">Success</option>
+            <option value="other">other</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="mt-4">
+        <input type="submit" class="btn btn-primary" value="Predict">
+      </div>
+    </form>
+  </div>
+
+  <!-- Bootstrap JS (with Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Enable all tooltips on the page
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
+  </script>
+  <script>
+    const form = document.querySelector('form');
+
+    form.addEventListener('submit', function (event) {
+      // Check if form is valid
+      if (!form.checkValidity()) {
+        event.preventDefault(); // Stop form submission
+        event.stopPropagation();
+
+        alert('Please fill out all required fields before submitting.');
+
+        // Optionally, show built-in HTML5 validation UI
+        form.classList.add('was-validated');
+      }
+    }, false);
+  </script>
+
+</body>
+
+</html>
